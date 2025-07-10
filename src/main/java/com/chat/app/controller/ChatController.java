@@ -1,22 +1,19 @@
 package com.chat.app.controller;
 
 import com.chat.app.model.ChatMessage;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.messaging.handler.annotation.SendTo;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class ChatController {
 
-    @MessageMapping("/sendMessage")
-    @SendTo("/topic/messages")
-    public ChatMessage sendMessage(ChatMessage message){
-        return message;
-    }
+    @Autowired
+    private SimpMessagingTemplate messagingTemplate;
 
-    @GetMapping("/chat")  // ✅ Fixed here
-    public String chat() {
-        return "chat";
+    @MessageMapping("/sendMessage")
+    public void sendMessage(ChatMessage message) {
+        messagingTemplate.convertAndSend("/topic/messages", message);
     }
 }
