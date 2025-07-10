@@ -13,7 +13,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         registry.addEndpoint("/chat")
-                .setAllowedOriginPatterns("", "http://localhost:3000")
+                .setAllowedOriginPatterns("https://react-chat-frontend-two.vercel.app/", "http://localhost:3000")
                 .withSockJS();
     }
 
